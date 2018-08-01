@@ -24,23 +24,17 @@ class BookController extends Controller
     public function borrow($id)
     {
     try {
-    $book = Book::findOrFail($id);
-    Auth::user()->borrow($book);
-    Session::flash("flash_notification", 
-    [
-    "level"=>"success",
-    "message"=>"Berhasil meminjam $book->title"
+        $book = Book::findOrFail($id);
+        Auth::user()->borrow($book);
+        Session::flash("flash_notification", 
+        ["level"=>"success","message"=>"Berhasil meminjam $book->title"
     ]);
     } catch (BookException $e) {
-    Session::flash("flash_notification",
-    [
-    "level" => "danger",
-    "message" => $e->getMessage()
+        Session::flash("flash_notification",
+        ["level" => "danger","message" => $e->getMessage()
     ]);
     } catch (ModelNotFoundException $e) {
-    Session::flash("flash_notification", [
-    "level"=>"danger",
-    "message"=>"Buku tidak ditemukan."
+        Session::flash("flash_notification", ["level"=>"danger","message"=>"Buku tidak ditemukan."
     ]);
     }
         return redirect('/');
